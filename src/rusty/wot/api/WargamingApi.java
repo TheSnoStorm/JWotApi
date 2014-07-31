@@ -10,45 +10,68 @@ import java.util.Map;
 
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.base.Joiner;
 
 import rusty.wot.Cluster;
 
 public class WargamingApi {
-	private static ObjectMapper mapper = new ObjectMapper();
-	public WargamingApi() {
-	}
+	private static ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+	private static Joiner joiner = Joiner.on(",").skipNulls();
 
-	public static List<GlobalMap> getCwMaps(Cluster cluster) throws JsonParseException, JsonMappingException, MalformedURLException, IOException {
+	public static List<GlobalMap> getCwMaps(Cluster cluster, String[] fields,String language) throws JsonParseException, JsonMappingException, IOException {
+		String fieldsParam = "";
+		if(fields != null && fields.length > 0){
+			fieldsParam = "&fields="+joiner.join(fields);
+		}
+		if(language == null) language = "en";
 		WgApiArray<GlobalMap> result = mapper.readValue(new URL("https://" + cluster.getApiAddress() + "/wot/globalwar/maps/"
 				+ "?application_id=" + cluster.getAppId()+
-				"&language=en"),
+				fieldsParam +
+				"&language="+language),
 				new TypeReference<WgApiArray<GlobalMap>>() {});
 
 		return result.data;
 
 	}
-	public static Map<String,Prov> getProv(Cluster cluster,GlobalMap cwMap) throws JsonParseException, JsonMappingException, MalformedURLException, IOException {
+	public static Map<String, Prov> getProv(Cluster cluster,GlobalMap cwMap, String[] provid, String[] fields,String language) throws JsonParseException, JsonMappingException, IOException {
+		String provParam = "";
+		if(provid != null && provid.length > 0){
+			provParam = "&province_id="+joiner.join(provid);
+		}
+		String fieldsParam = "";
+		if(fields != null && fields.length > 0){
+			fieldsParam = "&fields="+joiner.join(fields);
+		}
+		if(language == null) language = "en";
+		
 		WgApiObj<Prov> result = mapper.readValue(new URL("https://" + cluster.getApiAddress() + "/wot/globalwar/provinces/"
-				+ "?application_id=" + cluster.getAppId()+
-				"&map_id="+ cwMap.getMap_id()+
+				+ "?application_id=" + cluster.getAppId() +
+				"&map_id=" + cwMap.getMap_id() +
+				provParam + fieldsParam +
 				//"&fields=clan_id,arena,neighbors,regions.region_i18n"+
-				"&language=en"),
+				"&language="+language),
 				new TypeReference<WgApiObj<Prov>>() {});
 
 		return result.data;
 
 	}
-	public static List<LandingTournament> getLandTourn(Cluster cluster,GlobalMap cwMap,String prov) throws JsonParseException, JsonMappingException, MalformedURLException, IOException {
-		
+	public static LandingTournament getLandTourn(Cluster cluster,GlobalMap cwMap,String prov, String[] fields,String language) throws JsonParseException, JsonMappingException, MalformedURLException, IOException {
+		if(language == null) language = "en";
+		String fieldsParam = "";
+		if(fields != null && fields.length > 0){
+			fieldsParam = "&fields="+joiner.join(fields);
+		}
 		WgApiArray<LandingTournament> result = mapper.readValue(new URL("https://" + cluster.getApiAddress() + "/wot/globalwar/tournaments/?application_id=" + cluster.getAppId() + 
 				"&map_id="+ cwMap.getMap_id()+
 				"&province_id="+ prov +
-				"&language=en"), 
+				fieldsParam +
+				"&language="+language), 
 				new TypeReference<WgApiArray<LandingTournament>>() {});
 
-		return result.data;
+		return result.data.get(0);
 
 	}
 	public static void main(String[] args){
@@ -62,10 +85,10 @@ public class WargamingApi {
 		cwMap.setMap_id("globalmap");
 		cwMap.setMap_url("http://worldoftanks.com/clanwars/maps/globalmap");
 
-		System.out.println(getProv(clusters.get("na"), cwMap));
-		System.out.println(getLandTourn(clusters.get("na"), cwMap, "US_11"));
+		System.out.println(getProv(clusters.get("na"), cwMap,null,null,null));
+		System.out.println(getLandTourn(clusters.get("na"), cwMap, "US_11",null,null));
 		for (String clusterKey : clusters.keySet()) {
-				System.out.println(clusters.get(clusterKey) + " >>> " + getCwMaps(clusters.get(clusterKey)));
+				System.out.println(clusters.get(clusterKey) + " >>> " + getCwMaps(clusters.get(clusterKey),null,null));
 		}
 			} catch (Exception e) {
 				// TODO Auto-generated catch block

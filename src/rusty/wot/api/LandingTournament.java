@@ -11,46 +11,17 @@ public class LandingTournament {
 	}
 
 	public String			status;
-	public int				max_competitors;
+	public Integer				max_competitors;
 	public String			province_i18n;
 	public String			province_id;
 	public String			province_status;
 	public List<Integer>	competitors	= new ArrayList<Integer>();
-	public long				finish_time;
-	public long				start_time;
-	public long				updated_at;
-	public int				winner;
-	public List<TournRound> tournament_tree= new ArrayList<TournRound>();
+	public Long				finish_time;
+	public Long				start_time;
+	public Long				updated_at;
+	public Integer				winner;
+	public List<LandingTournamentRound> tournament_tree= new ArrayList<LandingTournamentRound>();
 
 }
-	class TournRound {
-		public boolean				current;
-		public int					round_idx;
-		public List<TournBattle>	battles = new ArrayList<TournBattle>();
-		
-		public TournRound(){
-			super();
-		}
+	 
 
-		@Override
-		public String toString() {
-			return "TournRound [current=" + current + ", round_idx=" + round_idx + ", battles=" + battles + "]";
-		}
-	}
-		class TournBattle {
-			public int		clan1;
-			public int		clan2;
-			public long		start_at;
-			public int		winner;
-			public String	fail_status;
-
-			public TournBattle(){
-			super();	
-			}
-			
-			@Override
-			public String toString() {
-				return "TournBattle [clan1=" + clan1 + ", clan2=" + clan2 + ", start_at=" + start_at + ", winner=" + winner + ", fail_status=" + fail_status + "]";
-			}
-
-		}

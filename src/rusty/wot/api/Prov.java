@@ -12,16 +12,16 @@ import com.fasterxml.jackson.annotation.JsonAnySetter;
 public class Prov {
 
 	public String					arena;
-	public int						clan_id;
+	public Integer						clan_id;
 	public List<String>				neighbors	= new ArrayList<String>();
 	public String					primary_region;
-	public int						prime_time;
+	public Integer						prime_time;
 	public String					province_i18n;
 	public String					province_id;
-	public int						revenue;
+	public Integer						revenue;
 	public String					status;
-	public long						updated_at;
-	public int						vehicle_max_level;
+	public Long						updated_at;
+	public Integer						vehicle_max_level;
 	public Map<String, ProvRegion>	regions		= new HashMap<>();
 //
 //	@JsonAnyGetter
