@@ -1,4 +1,4 @@
-package com.rusty.wot.api;
+package rusty.wot.api;
 
 import java.util.ArrayList;
 import java.util.HashMap;

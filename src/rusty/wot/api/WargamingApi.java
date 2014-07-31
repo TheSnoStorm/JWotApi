@@ -1,4 +1,4 @@
-package com.rusty.wot.api;
+package rusty.wot.api;
 
 import java.io.IOException;
 import java.net.MalformedURLException;

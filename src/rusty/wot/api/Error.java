@@ -1,4 +1,4 @@
-package com.rusty.wot.api;
+package rusty.wot.api;
 
 public class Error {
 	public Error(){}
