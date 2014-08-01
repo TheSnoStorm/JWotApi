@@ -21,7 +21,38 @@ public class LandingTournament {
 	public Long				updated_at;
 	public Integer				winner;
 	public List<LandingTournamentRound> tournament_tree= new ArrayList<LandingTournamentRound>();
+	public static class LandingTournamentRound {
+		public Boolean				current;
+		public Integer					round_idx;
+		public List<LandingTournamentBattle>	battles = new ArrayList<LandingTournamentBattle>();
+		
+		public LandingTournamentRound(){
+			super();
+		}
 
+		@Override
+		public String toString() {
+			return "TournRound [current=" + current + ", round_idx=" + round_idx + ", battles=" + battles + "]";
+		}
+		public static class LandingTournamentBattle {
+			public Integer		clan1;
+			public Integer		clan2;
+			public Long		start_at;
+			public Integer		winner;
+			public String	fail_status;
+
+			public LandingTournamentBattle(){
+			super();	
+			}
+			
+			@Override
+			public String toString() {
+				return "TournBattle [clan1=" + clan1 + ", clan2=" + clan2 + ", start_at=" + start_at + ", winner=" + winner + ", fail_status=" + fail_status + "]";
+			}
+
+		}
+	}
+	
 }
 	 
 
