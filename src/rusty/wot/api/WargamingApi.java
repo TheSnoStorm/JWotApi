@@ -16,6 +16,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Joiner;
 
 import rusty.wot.Cluster;
+import rusty.wot.api.clanwars.GlobalMap;
+import rusty.wot.api.clanwars.LandingTournament;
+import rusty.wot.api.clanwars.Prov;
 
 public class WargamingApi {
 	private static ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -80,7 +83,7 @@ public class WargamingApi {
 		clusters.put("na",new Cluster(4, "NA", "d2c4458d29e8c1d5c5792501e6101e17", "com", "na"));
 		clusters.put("asia",new Cluster(1, "ASIA", "8eb93baa03066dbc50649d2dcbd1299c", "asia", "sea"));
 		clusters.put("eu",new Cluster(2, "EU", "73e03ec54ee6b2e50cc5bc93c1d3babd", "eu", "eu"));
-		clusters.put("ru",new Cluster(3, "RU", "eee4feae89800ee2306aa2fc3793afb0", "ru", "ru"));
+		clusters.put("ru",new Cluster(5, "RU", "eee4feae89800ee2306aa2fc3793afb0", "ru", "ru"));
 		GlobalMap cwMap = new GlobalMap();
 		cwMap.setMap_id("globalmap");
 		cwMap.setMap_url("http://worldoftanks.com/clanwars/maps/globalmap");

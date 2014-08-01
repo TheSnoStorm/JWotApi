@@ -1,4 +1,4 @@
-package rusty.wot.api;
+package rusty.wot.api.clanwars;
 
 import java.util.ArrayList;
 import java.util.HashMap;
