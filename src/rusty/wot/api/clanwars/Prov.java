@@ -5,10 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import com.fasterxml.jackson.annotation.JsonAnyGetter;
-import com.fasterxml.jackson.annotation.JsonAnySetter;
-
-@SuppressWarnings("unused")
 public class Prov {
 
 	public String					arena;
@@ -23,20 +19,6 @@ public class Prov {
 	public Long						updated_at;
 	public Integer						vehicle_max_level;
 	public Map<String, ProvRegion>	regions		= new HashMap<>();
-//
-//	@JsonAnyGetter
-//	@SuppressWarnings("unused")
-//	// called by Jackson
-//	private Map<String, ProvRegion> getExtraProperty() {
-//		return regions;
-//	}
-//
-//	@JsonAnySetter
-//	@SuppressWarnings("unused")
-//	// called by jackson
-//	private void setUnknownProperty(String key, ProvRegion value) {
-//		regions.put(key, value);
-//	}
 
 	@Override
 	public String toString() {

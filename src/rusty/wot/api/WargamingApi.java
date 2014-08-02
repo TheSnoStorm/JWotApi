@@ -16,12 +16,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Joiner;
 
 import rusty.wot.Cluster;
+import rusty.wot.api.clanwars.ClansBattles;
 import rusty.wot.api.clanwars.GlobalMap;
 import rusty.wot.api.clanwars.LandingTournament;
 import rusty.wot.api.clanwars.Prov;
 
 public class WargamingApi {
-	private static ObjectMapper mapper = new ObjectMapper().configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+	private static ObjectMapper mapper = new ObjectMapper();//.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
 	private static Joiner joiner = Joiner.on(",").skipNulls();
 
 	public static List<GlobalMap> getCwMaps(Cluster cluster, String[] fields,String language) throws JsonParseException, JsonMappingException, IOException {
@@ -39,6 +40,18 @@ public class WargamingApi {
 		return result.data;
 
 	}
+	public static Map<String,List<ClansBattles>> getClansBattles(Cluster cluster, GlobalMap cwMap, int clanid,String language) throws JsonParseException, JsonMappingException, IOException {
+		
+		if(language == null) language = "en";
+		WgApiObjList<ClansBattles> result = mapper.readValue(new URL("https://" + cluster.getApiAddress() + "/wot/globalwar/battles/"
+				+ "?application_id=" + cluster.getAppId()+
+				"&map_id="+cwMap.map_id +
+				"&language="+language),
+				new TypeReference<WgApiObjList<ClansBattles>>() {});
+
+		return result.data;
+
+	}
 	public static Map<String, Prov> getProv(Cluster cluster,GlobalMap cwMap, String[] provid, String[] fields,String language) throws JsonParseException, JsonMappingException, IOException {
 		String provParam = "";
 		if(provid != null && provid.length > 0){
@@ -52,7 +65,7 @@ public class WargamingApi {
 		
 		WgApiObj<Prov> result = mapper.readValue(new URL("https://" + cluster.getApiAddress() + "/wot/globalwar/provinces/"
 				+ "?application_id=" + cluster.getAppId() +
-				"&map_id=" + cwMap.getMap_id() +
+				"&map_id=" + cwMap.map_id +
 				provParam + fieldsParam +
 				//"&fields=clan_id,arena,neighbors,regions.region_i18n"+
 				"&language="+language),
@@ -68,7 +81,7 @@ public class WargamingApi {
 			fieldsParam = "&fields="+joiner.join(fields);
 		}
 		WgApiArray<LandingTournament> result = mapper.readValue(new URL("https://" + cluster.getApiAddress() + "/wot/globalwar/tournaments/?application_id=" + cluster.getAppId() + 
-				"&map_id="+ cwMap.getMap_id()+
+				"&map_id="+ cwMap.map_id+
 				"&province_id="+ prov +
 				fieldsParam +
 				"&language="+language), 
@@ -85,9 +98,10 @@ public class WargamingApi {
 		clusters.put("eu",new Cluster(2, "EU", "73e03ec54ee6b2e50cc5bc93c1d3babd", "eu", "eu"));
 		clusters.put("ru",new Cluster(5, "RU", "eee4feae89800ee2306aa2fc3793afb0", "ru", "ru"));
 		GlobalMap cwMap = new GlobalMap();
-		cwMap.setMap_id("globalmap");
-		cwMap.setMap_url("http://worldoftanks.com/clanwars/maps/globalmap");
+		cwMap.map_id = "globalmap";
+		cwMap.map_url = "http://worldoftanks.com/clanwars/maps/globalmap";
 
+		System.out.println(getClansBattles(clusters.get("asia"), cwMap, 2000001576, null));
 		System.out.println(getProv(clusters.get("na"), cwMap,null,null,null));
 		System.out.println(getLandTourn(clusters.get("na"), cwMap, "US_11",null,null));
 		for (String clusterKey : clusters.keySet()) {
@@ -135,8 +149,27 @@ public class WargamingApi {
 
 		public WgApiObj() {
 		}
+		public void set(T t) {
+			this.t = t;
+		}
+		public T get() {
+			return t;
+		}
+		public Map<String,T> data = new HashMap<String, T>();
+		@Override
+		public String toString() {
+			return "WargamingApi [error=" + error + ", status=" + status + ", count=" + count + ", data=" + data + "]";
+		}
+	}
+	public static class WgApiObjList<T> {
 
+		public String	status;
+		public Error	error;
+		public Integer	count;
+		private T	t;
 
+		public WgApiObjList() {
+		}
 		public void set(T t) {
 			this.t = t;
 		}
@@ -144,20 +177,7 @@ public class WargamingApi {
 		public T get() {
 			return t;
 		}
-		public Map<String,T> data = new HashMap<String, T>();
-		
-//		@JsonAnyGetter
-//	    @SuppressWarnings("unused") //called by Jackson
-//	    private Map<String, T> getExtraProperty() {
-//	        return data;
-//	    }
-//
-//
-//	    @JsonAnySetter
-//	    @SuppressWarnings("unused") //called by jackson
-//	    private void setUnknownProperty(String key, T t) {
-//	    	data.put(key, t);
-//	    }
+		public Map<String,List<T>> data = new HashMap<String, List<T>>();
 		@Override
 		public String toString() {
 			return "WargamingApi [error=" + error + ", status=" + status + ", count=" + count + ", data=" + data + "]";
