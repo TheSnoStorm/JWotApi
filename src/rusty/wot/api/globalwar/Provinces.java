@@ -1,11 +1,11 @@
-package rusty.wot.api.clanwars;
+package rusty.wot.api.globalwar;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class Prov {
+public class Provinces {
 
 	public String					arena;
 	public Integer						clan_id;

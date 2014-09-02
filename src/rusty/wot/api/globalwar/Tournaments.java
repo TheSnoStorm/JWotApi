@@ -1,13 +1,13 @@
-package rusty.wot.api.clanwars;
+package rusty.wot.api.globalwar;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class LandingTournament {
+public class Tournaments {
 	
 	@Override
 	public String toString() {
-		return "LandingTournament [status=" + status + ", max_competitors=" + max_competitors + ", province_i18n=" + province_i18n + ", province_id=" + province_id + ", province_status=" + province_status + ", competitors=" + competitors + ", finish_time=" + finish_time + ", start_time=" + start_time + ", updated_at=" + updated_at + ", winner=" + winner + ", tournament_tree=" + tournament_tree + "]";
+		return "Tournaments [status=" + status + ", max_competitors=" + max_competitors + ", province_i18n=" + province_i18n + ", province_id=" + province_id + ", province_status=" + province_status + ", competitors=" + competitors + ", finish_time=" + finish_time + ", start_time=" + start_time + ", updated_at=" + updated_at + ", winner=" + winner + ", tournament_tree=" + tournament_tree + "]";
 	}
 
 	public String			status;
