@@ -1,10 +1,10 @@
-package rusty.wot.api;
+package wgapi;
+
 
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.Writer;
 
 import org.jsoup.Jsoup;
@@ -61,6 +61,7 @@ public class ClassGenerator {
 
 	}
 
+	@SuppressWarnings("unused")
 	private static void makeClassFile(String url, File file, String packageName) {
 		Writer fileWriter = null;
 		BufferedWriter bw = null;

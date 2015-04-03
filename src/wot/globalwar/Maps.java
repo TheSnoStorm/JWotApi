@@ -1,4 +1,4 @@
-package rusty.wot.api.globalwar;
+package wot.globalwar;
 
 public class Maps{
 	@Override

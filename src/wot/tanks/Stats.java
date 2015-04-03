@@ -1,4 +1,4 @@
-package rusty.wot.api.tanks;
+package wot.tanks;
 
 public class Stats {
 		@Override

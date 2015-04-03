@@ -1,4 +1,4 @@
-package rusty.wot.api.globalwar;
+package wot.globalwar;
 
 import org.joda.time.DateTime;
 

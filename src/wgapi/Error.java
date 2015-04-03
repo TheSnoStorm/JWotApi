@@ -1,4 +1,5 @@
-package rusty.wot.api;
+package wgapi;
+
 
 public class Error {
 	public Error(){}
